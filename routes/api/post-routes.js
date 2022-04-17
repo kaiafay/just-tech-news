@@ -37,7 +37,7 @@ router.get('/:id', (req, res) => {
     })
     .then(dbPostData => {
         if(!dbPostData) {
-            res.status(404).json({ message: 'No post found with this ID!'});
+            res.status(404).json({ message: 'No post found with this ID!' });
             return;
         }
         res.json(dbPostData);
@@ -76,7 +76,27 @@ router.put('/:id', (req, res) => {
     )
     .then(dbPostData => {
         if(!dbPostData) {
-            res.status(404).json({ message: 'No post found with this ID!'});
+            res.status(404).json({ message: 'No post found with this ID!' });
+            return;
+        }
+        res.json(dbPostData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+});
+
+// delete a post
+router.delete('/:id', (req, res) => {
+    Post.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(dbPostData => {
+        if(!dbPostData) {
+            res.status(404).json({ message: 'No post found with this ID!' });
             return;
         }
         res.json(dbPostData);

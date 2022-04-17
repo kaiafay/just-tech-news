@@ -6,6 +6,8 @@ router.get('/', (req, res) => {
     console.log('===================');
     Post.findAll({
         attributes: ['id', 'post_url', 'title', 'created_at'],
+        // orders posts based off creation time
+        order: [['created_at', 'DESC']],
         // include the JOIN to the User table
         include: [
             {

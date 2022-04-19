@@ -72,28 +72,13 @@ router.post('/', (req, res) => {
 // update a post's votes
 // must go before the /:id PUT route or Express.js will think 'upvote' is a valid parameter for /:id
 router.put('/upvote', (req, res) => {
-    Vote.create({
-        user_id: req.body.user_id,
-        post_id: req.body.post_id
-    }).then(() => {
-        // find the post that was voted on
-        return Post.findOne({
-            where: {
-                id: req.body.post_id
-            },
-            attributes: ['id', 'post_url', 'title', 'created_at',
-            // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name 'vote_count'
-            [
-                // the .literal() method allows us to run regular SQL queries within Sequelize
-                sequelize.literal('(SELECT COUNT (*) FROM vote WHERE post_id = vote.post_id)'),
-                'vote_count'
-            ]
-    
-            ]
-        })
-    })
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => res.json(err));
+    // custom static method created in models/Post.js
+    Post.upvote(req.body, { Vote })
+    .then(updatedPostData => res.json(updatedPostData))
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+    });
 });
 
 // update a post title

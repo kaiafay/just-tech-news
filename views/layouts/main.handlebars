@@ -1,0 +1,32 @@
+{{!-- folder structure for handlebars is as follows: --}}
+{{!-- main layout located at views/layouts/main.handlebars --}}
+{{!-- all other template files will go directly in the views folder --}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just Tech News</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>
+        <a href="/">Just Tech News</a>
+      </h1>
+    </header>
+    <main>
+      {{!-- syntax for data that will be plugged in later --}}
+      {{{ body }}}
+    </main>
+    <footer>
+      Thanks for visiting!
+    </footer>
+  </div>
+
+</body>
+
+</html>

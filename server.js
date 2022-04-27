@@ -33,9 +33,9 @@ const sess = {
   })
 };
 
-// turn on routes
-app.use(routes);
 app.use(session(sess));
+app.use(routes);
+
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {

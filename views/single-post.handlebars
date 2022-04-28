@@ -18,18 +18,7 @@
 {{/if}}
 
 {{!-- comment section --}}
-<div class="comments">
-  {{#each post.comments}}
-  <section class="comment">
-    <div class="meta">
-      {{user.username}} on {{created_at}}
-    </div>
-    <div class="text">
-      {{comment_text}}
-    </div>
-  </section>
-  {{/each}}
-</div>
+{{> comments post.comments}}
 
 {{!-- only load sources if necessary --}}
 {{#if loggedIn}}

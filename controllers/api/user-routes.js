@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const { User, Post, Vote, Comment } = require('../../models');
-const withAuth = require('../utils/auth');
 
 // GET /api/users
 router.get('/', (req, res) => {
@@ -60,7 +59,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST /api/users
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
     // create() method will create a user based off input for username, email, and password
     User.create({
         username: req.body.username,
@@ -80,7 +79,7 @@ router.post('/', withAuth, (req, res) => {
 
 // login route
 // POST method is the standard for login
-router.post('/login', withAuth, (req, res) => {
+router.post('/login', (req, res) => {
     User.findOne({
         where: {
             email: req.body.email
@@ -114,7 +113,7 @@ router.post('/login', withAuth, (req, res) => {
 });
 
 // logout route
-router.post('/logout', withAuth, (req, res) => {
+router.post('/logout', (req, res) => {
     if(req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end();
@@ -125,7 +124,7 @@ router.post('/logout', withAuth, (req, res) => {
 });
 
 // PUT /api/users/1
-router.put('/:id', withAuth, (req, res) => {
+router.put('/:id', (req, res) => {
     // if req.body has exact key/value pairs to match the model, use 'req.body'
     // pass in req.body to provide the new data for the update
     User.update(req.body, {
@@ -150,7 +149,7 @@ router.put('/:id', withAuth, (req, res) => {
 });
 
 // DELETE /api/users/1
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', (req, res) => {
     User.destroy({
         where: {
             id: req.params.id
